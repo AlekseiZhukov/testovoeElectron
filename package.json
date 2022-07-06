@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "main": "electron/main.js",
+  "productName": "download files",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "electron": "^19.0.6",
     "electron-dl": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -15,11 +16,24 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set BROWSER=none && react-scripts start",
+    "start": "cross-env BROWSER=none && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "build-electron": "mkdir build\\electron && robocopy electron build\\electron /S",
+    "package": "electron-builder build --win -c.extraMetadata.main=build/electron/main.js --publish never"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "testovoeElectron",
+      "owner": "AlekseiZhukov"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +54,9 @@
     ]
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^19.0.7",
+    "electron-builder": "^23.1.0",
     "electron-devtools-installer": "^3.2.0"
   }
 }
